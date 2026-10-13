@@ -9,9 +9,11 @@ public class Ikaslea{
     private boolean aktibo;
     private int [] notak;
     public Ikaslea (String id, String izena, boolean aktibo, int [] notak){
-        this.id = id; setIzena(izena);
+        this.id = id;
+        setIzena(izena);
         // Setter-a erabiltzen dugu balidazioa pasatzeko
-        this.aktibo = aktibo;this.notak = notak;
+        this.aktibo = aktibo;
+        this.notak = notak;
      }
      public void setIzena (String izena){
         if(izena == null) {

@@ -20,7 +20,7 @@ class KalkulagailuaTest {
 
     int emaitza = kalk.kendu(10,4);
 
-    assertEquals(6, emaitza, "10 - 4 kenketak 6 izan beharko luke");
+    assertEquals(5, emaitza, "10 - 4 kenketak 5 izan beharko luke");
  }
  @Test 
  void oinarrizkoBiderketaTest(){

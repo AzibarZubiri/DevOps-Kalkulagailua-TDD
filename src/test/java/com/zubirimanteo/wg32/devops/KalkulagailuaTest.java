@@ -12,7 +12,7 @@ class KalkulagailuaTest {
  int emaitza = kalk.batu(2, 3);
 
  // 3. Egiaztapena (Assert)
- assertEquals(5, emaitza, "2 + 3 batuketak 5 izan beharko luke");
+ assertEquals(6, emaitza, "2 + 3 batuketak 6 izan beharko luke");
  }
  @Test 
  void oinarrizkoKenketaTest(){

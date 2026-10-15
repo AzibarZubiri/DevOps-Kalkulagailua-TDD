@@ -16,3 +16,5 @@ jobs:
        with:
          java-version: '25'
          distribution: 'temurin'
+     - name: Ejecutar los tests
+       run: mvn clean test

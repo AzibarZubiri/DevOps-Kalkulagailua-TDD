@@ -7,14 +7,25 @@ on:
 jobs:
  build:
    runs-on: ubuntu-latest
+   strategy:
+     matrix:
+       java: [ '17', '21', '25' ]
    steps:
      - name: Descargar el código del repositorio
        uses: actions/checkout@v7.0.1
    
-     - name: Configurar el JDK 25
+     - name: Configurar el JDK ${{ matrix.java }}
        uses: actions/setup-java@v6.1.0
        with:
-         java-version: '25'
+         java-version: ${{ matrix.java }}
          distribution: 'temurin'
-     - name: Ejecutar los tests
-       run: mvn clean test
+         
+     - name: Ejecutar los tests y empaquetar
+       run: mvn clean verify
+
+     - name: Guardar la calculadora compilada
+       uses: actions/upload-artifact@v7.0.2
+       with:
+         name: kalkulagailua-tdd-java${{ matrix.java }}
+         path: target/*.jar
+       

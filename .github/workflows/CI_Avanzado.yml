@@ -1,0 +1,97 @@
+name: Advanced CI with Kalkulagailua-TDD
+on: 
+  pull_request: 
+    branches: [master]
+jobs:
+  code_quality:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        java: [ '17' , '21', '25' ]        
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v6.1.0
+        
+      - name: Configurar el JDK ${{ matrix.java }}
+        uses: actions/setup-java@v6.1.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: 'maven'
+          
+      - name: Ejecutar Checklist
+        run: mvn checkstyle:check
+  test: 
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        java: [ '17' , '21', '25' ]        
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v6.1.0
+        
+      - name: Configurar el JDK ${{ matrix.java }}
+        uses: actions/setup-java@v6.1.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Ejecutar Test Unitarios
+        run: mvn test
+
+      - name: Subir reporte de cobertura a github
+        uses: actions/upload-artifact@v7.0.2
+        if: always()
+        with:
+          name: reporte-cobertura-jacoco-java${{ matrix.java }}
+          path: target/site/jacoco
+          retention-days: 7
+          
+  package:        
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        java: [ '17' , '21', '25' ]        
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v6.1.0
+        
+      - name: Configurar el JDK ${{ matrix.java }}
+        uses: actions/setup-java@v6.1.0
+        with:
+          java-version: ${{ matrix.java }}
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Empaquetar el proyecto
+        run: mvn package -DskipTests
+
+      - name: Subir el artefacto JAR
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: kalkulagailua-app-java${{ matrix.java }}
+          path: target/*.jar
+          retention-days: 7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        

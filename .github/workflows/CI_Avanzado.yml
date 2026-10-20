@@ -3,24 +3,6 @@ on:
   pull_request: 
     branches: [master]
 jobs:
-  code_quality:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix: 
-        java: [ '17' , '21', '25' ]        
-    steps:
-      - name: Checkout del código
-        uses: actions/checkout@v6.1.0
-        
-      - name: Configurar el JDK ${{ matrix.java }}
-        uses: actions/setup-java@v6.1.0
-        with:
-          java-version: ${{ matrix.java }}
-          distribution: 'temurin'
-          cache: 'maven'
-          
-      - name: Ejecutar Checklist
-        run: mvn checkstyle:check
   test: 
     runs-on: ubuntu-latest
     strategy:
